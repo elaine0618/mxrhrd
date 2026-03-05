@@ -6,8 +6,8 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
-    <title>元祖BanG Dream!Chan 华容道小游戏</title>
-    <meta name="description" content="元祖迷你动画小游戏复刻，体验增强" />
+    <title>元祖·三国华容道 · 电梯选关版</title>
+    <meta name="description" content="电梯楼层数字直接对应关卡，随机在关卡范围内" />
     <style>
       * {
         margin: 0;
@@ -509,7 +509,7 @@
     <div id="game-wrapper">
       <div id="board-inner">
         <img class="board-bg" src="images/board1.png" alt="棋盘背景" />
-        <div id="elevator-floor">1</div> <!-- 默认显示1楼 -->
+        <div id="elevator-floor">1</div> <!-- 电梯楼层数字 = 当前关卡编号 -->
 
         <!-- 链接容器：原仓库 + fork仓库 + B站番剧 -->
         <div class="repo-links">
@@ -564,11 +564,12 @@
           🎶角色音效
         </button>
 
-        <!-- 自定义楼层控件 -->
-        <div class="floor-control">
-          <input type="number" id="custom-floor" value="1" min="1" step="1">
+        <!-- 电梯楼层控件：直接控制关卡 (楼层数 = 关卡索引+1) -->
+        <div class="floor-control" style="flex-wrap:wrap; width:110px;">
+          <input type="number" id="custom-floor" value="1" min="1" max="3" step="1" style="width:70px;">
           <button class="btn floor-btn" id="random-floor">随机</button>
         </div>
+        <!-- 不再需要独立下拉框，但保留一个只读提示（可选） -->
       </div>
     </div>
 
@@ -583,14 +584,12 @@
     <!-- 更新日志弹窗 -->
     <div id="changelog-overlay">
       <div id="changelog-box">
-        <h2>📢 更新日志 v1.1</h2>
+        <h2>📢 更新日志 v1.3</h2>
         <div id="changelog-content">
           <ul>
-            <li>新增：追加更多角色音效以及部分成员的随机播放（多惠，摩卡等角色多语音）</li>
-            <li>新增：重置按钮音效</li>
-            <li>优化：移动端布局适配横竖屏</li>
-            <li>修复：部分音效无法预加载的问题</li>
-            <li>新增：更新日志弹窗（就是本窗口）</li>
+            <li>✨ 电梯楼层 = 关卡编号！直接修改楼层即可切换关卡</li>
+            <li>✨ 随机按钮只在当前关卡总数范围内随机</li>
+            <li>优化：电梯数字改变时自动加载对应关卡布局</li>
           </ul>
         </div>
         <div class="changelog-buttons">
@@ -603,18 +602,15 @@
 
     <script>
       // ============================================================
-      // 更新日志配置
+      // 更新日志配置 (升级到 v1.3)
       // ============================================================
-      const CHANGELOG_VERSION = 'v1.1'; // 当前版本号，更新时修改
+      const CHANGELOG_VERSION = 'v1.3'; // 当前版本号
       const changelogOverlay = document.getElementById('changelog-overlay');
 
-      // 检查是否需要显示更新日志
       function shouldShowChangelog() {
-        // 永久忽略检查
         if (localStorage.getItem('changelog_permanent_ignore') === 'true') {
           return false;
         }
-        // 本次更新不再弹出检查
         const lastVersion = localStorage.getItem('changelog_last_version');
         if (lastVersion === CHANGELOG_VERSION) {
           return false;
@@ -622,20 +618,16 @@
         return true;
       }
 
-      // 隐藏弹窗
       function hideChangelog() {
         changelogOverlay.classList.remove('show');
       }
 
-      // 显示弹窗
       function showChangelog() {
         changelogOverlay.classList.add('show');
       }
 
-      // 按钮事件
       document.getElementById('changelog-ok').addEventListener('click', () => {
         hideChangelog();
-        // 不做任何记录，下次加载仍会显示
       });
 
       document.getElementById('changelog-skip').addEventListener('click', () => {
@@ -649,7 +641,7 @@
       });
 
       // ============================================================
-      // 数据模型
+      // 数据模型 · 多关卡配置
       // ============================================================
       const COLS = 4;
       const ROWS = 5;
@@ -662,18 +654,53 @@
         "1x1": [1, 1],
       };
 
-      // 初始布局 — 参照效果图
-      const INITIAL_LAYOUT = [
-        { id: "michelle", type: "2x2", x: 1, y: 0, img: "images/michelle.png" },
-        { id: "nyamu", type: "1x2", x: 0, y: 0, img: "images/nyamu.png" },
-        { id: "moca", type: "1x2", x: 3, y: 0, img: "images/moca.png" },
-        { id: "arisa", type: "1x2", x: 0, y: 2, img: "images/arisa.png" },
-        { id: "yukina", type: "2x1", x: 1, y: 2, img: "images/yukina.png" },
-        { id: "eve", type: "1x2", x: 3, y: 2, img: "images/eve.png" },
-        { id: "saya", type: "1x1", x: 1, y: 3, img: "images/saya.png" },
-        { id: "box", type: "1x1", x: 2, y: 3, img: "images/box.png" },
-        { id: "otae", type: "1x1", x: 0, y: 4, img: "images/otae.png" },
-        { id: "tsukushi", type: "1x1", x: 3, y: 4, img: "images/tsukushi.png" },
+      // ★★★ 关卡参数列表 (可自由增删改) ★★★
+      const LEVELS = [
+        { // 关卡1 (索引0): 经典布局
+          name: '经典·米歇尔',
+          layout: [
+            { id: "michelle", type: "2x2", x: 1, y: 0, img: "images/michelle.png" },
+            { id: "nyamu", type: "1x2", x: 0, y: 0, img: "images/nyamu.png" },
+            { id: "moca", type: "1x2", x: 3, y: 0, img: "images/moca.png" },
+            { id: "arisa", type: "1x2", x: 0, y: 2, img: "images/arisa.png" },
+            { id: "yukina", type: "2x1", x: 1, y: 2, img: "images/yukina.png" },
+            { id: "eve", type: "1x2", x: 3, y: 2, img: "images/eve.png" },
+            { id: "saya", type: "1x1", x: 1, y: 3, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 2, y: 3, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 0, y: 4, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 3, y: 4, img: "images/tsukushi.png" },
+          ]
+        },
+        { // 关卡2 (索引1): 横刀立马风格
+          name: '横刀立马',
+          layout: [
+            { id: "michelle", type: "2x2", x: 1, y: 2, img: "images/michelle.png" },
+            { id: "nyamu", type: "1x2", x: 0, y: 0, img: "images/nyamu.png" },
+            { id: "moca", type: "1x2", x: 3, y: 0, img: "images/moca.png" },
+            { id: "arisa", type: "1x2", x: 0, y: 2, img: "images/arisa.png" },
+            { id: "yukina", type: "1x2", x: 3, y: 2, img: "images/yukina.png" },
+            { id: "eve", type: "1x1", x: 1, y: 0, img: "images/eve.png" },
+            { id: "saya", type: "1x1", x: 2, y: 0, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 1, y: 4, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 2, y: 4, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 0, y: 4, img: "images/tsukushi.png" },
+          ]
+        },
+        { // 关卡3 (索引2): 层层设防
+          name: '层层设防',
+          layout: [
+            { id: "michelle", type: "2x2", x: 1, y: 3, img: "images/michelle.png" },
+            { id: "nyamu", type: "1x2", x: 0, y: 1, img: "images/nyamu.png" },
+            { id: "moca", type: "1x2", x: 3, y: 1, img: "images/moca.png" },
+            { id: "arisa", type: "1x1", x: 0, y: 0, img: "images/arisa.png" },
+            { id: "yukina", type: "1x1", x: 3, y: 0, img: "images/yukina.png" },
+            { id: "eve", type: "1x1", x: 1, y: 0, img: "images/eve.png" },
+            { id: "saya", type: "1x1", x: 2, y: 0, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 0, y: 3, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 3, y: 3, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 1, y: 2, img: "images/tsukushi.png" },
+          ]
+        }
       ];
 
       // 当前游戏状态
@@ -701,14 +728,62 @@
       const randomFloorBtn = document.getElementById("random-floor");
 
       // ============================================================
-      // 自定义楼层功能
+      // 核心功能：电梯楼层 = 关卡编号 (1 ~ LEVELS.length)
       // ============================================================
+      function getTotalLevels() {
+        return LEVELS.length;
+      }
+
+      // 根据楼层数字(1-based)加载关卡
+      function loadLevelByFloor(floor) {
+        let levelIndex = floor - 1;
+        // 边界保护
+        if (levelIndex < 0) levelIndex = 0;
+        if (levelIndex >= LEVELS.length) levelIndex = LEVELS.length - 1;
+
+        const levelData = LEVELS[levelIndex];
+        blocks = deepCloneLayout(levelData.layout);
+        // 重置步数等相关状态
+        steps = 0;
+        stepDisplay.textContent = "0";
+        victoryOverlay.classList.remove("show");
+        hintSolution = null;
+        hintIndex = 0;
+        hintStateKey = null;
+        if (hintWorker) {
+          hintWorker.terminate();
+          hintWorker = null;
+        }
+        const btnHint = document.getElementById("btn-hint");
+        if (btnHint) {
+          btnHint.disabled = false;
+          btnHint.textContent = "提 示";
+        }
+        renderBoard();
+
+        // 同步电梯显示
+        elevatorFloor.textContent = levelIndex + 1;
+        customFloorInput.value = levelIndex + 1;
+        customFloorInput.max = getTotalLevels(); // 动态更新max
+      }
+
+      // 更新电梯楼层并加载对应关卡
       function updateElevatorFloor(value) {
-        // 确保为正整数
         let num = parseInt(value, 10);
+        const maxLevel = getTotalLevels();
         if (isNaN(num) || num < 1) num = 1;
-        elevatorFloor.textContent = num;
-        customFloorInput.value = num; // 同步输入框
+        if (num > maxLevel) num = maxLevel;
+
+        // 如果楼层没变，但可能因为输入越界被修正，仍需同步
+        const currentFloor = parseInt(elevatorFloor.textContent, 10);
+        if (currentFloor !== num) {
+          // 真正切换关卡
+          loadLevelByFloor(num);
+        } else {
+          // 只是修正输入框的值
+          elevatorFloor.textContent = num;
+          customFloorInput.value = num;
+        }
       }
 
       // 监听输入框变化
@@ -716,15 +791,15 @@
         updateElevatorFloor(e.target.value);
       });
 
-      // 随机按钮
+      // 随机按钮：在 1 ~ 总关卡数 之间随机
       randomFloorBtn.addEventListener('click', () => {
-        // 生成1~1000随机整数（可调整上限）
-        const randomNum = Math.floor(Math.random() * 1000) + 1;
+        const max = getTotalLevels();
+        const randomNum = Math.floor(Math.random() * max) + 1; // 1~max
         updateElevatorFloor(randomNum);
       });
 
       // ============================================================
-      // 渲染
+      // 渲染 & 工具函数 (基本不变)
       // ============================================================
       function deepCloneLayout(layout) {
         return layout.map((b) => ({ ...b }));
@@ -758,13 +833,11 @@
           img.draggable = false;
           el.appendChild(img);
 
-          // 鼠标拖拽
           el.addEventListener("mousedown", (e) => {
             e.preventDefault();
             startDrag(block.id, e.clientX, e.clientY);
           });
 
-          // 触摸拖拽
           el.addEventListener("touchstart", (e) => {
             e.preventDefault();
             const touch = e.touches[0];
@@ -784,7 +857,7 @@
       }
 
       // ============================================================
-      // 拖拽交互
+      // 拖拽交互 (保持不变)
       // ============================================================
       function startDrag(blockId, startX, startY) {
         if (solving) return;
@@ -852,27 +925,20 @@
       document.addEventListener("touchcancel", endDrag);
 
       // ============================================================
-      // 音效系统 (使用音频文件)
+      // 音效系统 (完全不变)
       // ============================================================
       const audioCache = {};
-
-      // 角色语音配置：每个成员可配置多个音效文件，移动时随机选取一个
       const CHARACTER_AUDIO_MAP = {
-        eve: ["images/eve.mp3"], // 示例：多个语音文件，请根据实际修改
+        eve: ["images/eve.mp3"],
         otae: ["images/otae1.mp3","images/otae2.mp3"], 
         moca: ["images/moca1.mp3",'images/moca2.mp3'],
         nyamu: ["images/nyamu.mp3"],
         saya: ["images/saya.mp3"],
         yukina: ["images/ykn.mp3"],
         arisa: ["images/aras.mp3"],
-        tsukushi: ["images/tsukushi.mp3"]// 只有一个文件，则总是播放它
-        // 可继续添加其他角色
+        tsukushi: ["images/tsukushi.mp3"]
       };
-
-      // UI 音效（重置按钮等）
-      const UI_AUDIO_MAP = {
-        reset: "images/reset.mp3", // 重置按钮音效
-      };
+      const UI_AUDIO_MAP = { reset: "images/reset.mp3" };
 
       function tryPlayAudio(src) {
         if (!src) return;
@@ -882,28 +948,19 @@
           a.play().catch(() => {});
           return;
         }
-
         const audio = new Audio(src);
         audio.volume = 0.6;
-
         const p = audio.play();
         if (p !== undefined) {
-          p.then(() => {
-            audioCache[src] = audio;
-          }).catch((e) => {
-            console.warn("Audio play failed or file not found:", src);
-          });
+          p.then(() => { audioCache[src] = audio; }).catch(() => {});
         }
       }
 
       let voiceEnabled = true;
-
       function toggleVoice() {
         voiceEnabled = !voiceEnabled;
         const btn = document.getElementById("btn-voice");
-        if (btn) {
-          btn.classList.toggle("toggle-on", voiceEnabled);
-        }
+        if (btn) btn.classList.toggle("toggle-on", voiceEnabled);
       }
 
       function playCharacterAudio(charId) {
@@ -929,14 +986,8 @@
         }
       }
 
-      function playWinSound() {
-        tryPlayAudio("images/win.mp3");
-      }
-
-      function playResetSound() {
-        if (!voiceEnabled) return; // 重置音效也受语音开关控制
-        tryPlayAudio(UI_AUDIO_MAP.reset);
-      }
+      function playWinSound() { tryPlayAudio("images/win.mp3"); }
+      function playResetSound() { if (voiceEnabled) tryPlayAudio(UI_AUDIO_MAP.reset); }
 
       function preloadSounds() {
         const audioList = [
@@ -958,9 +1009,8 @@
       }
 
       // ============================================================
-      // 碰撞检测与移动
+      // 碰撞检测与移动 (保持不变)
       // ============================================================
-
       function buildGrid(blocksState) {
         const grid = Array.from({ length: ROWS }, () => Array(COLS).fill(null));
         blocksState.forEach((b) => {
@@ -978,9 +1028,7 @@
         const [w, h] = TYPES[block.type];
         const nx = block.x + dx;
         const ny = block.y + dy;
-
         if (nx < 0 || ny < 0 || nx + w > COLS || ny + h > ROWS) return false;
-
         for (let r = 0; r < h; r++) {
           for (let c = 0; c < w; c++) {
             const occupant = grid[ny + r][nx + c];
@@ -1013,54 +1061,27 @@
         if (block.id === "michelle" && block.x === 1 && block.y === 3) {
           setTimeout(() => {
             playWinSound();
-            showVictory();
+            victorySteps.textContent = steps;
+            victoryOverlay.classList.add("show");
           }, 300);
         }
-
         return true;
       }
 
-      function showVictory() {
-        victorySteps.textContent = steps;
-        victoryOverlay.classList.add("show");
-      }
-
+      // 重置游戏 (重设当前关卡，步数清零)
       function resetGame() {
-        playResetSound(); // 播放重置音效
-
-        solving = false;
-        steps = 0;
-        stepDisplay.textContent = "0";
-        victoryOverlay.classList.remove("show");
-        blocks = deepCloneLayout(INITIAL_LAYOUT);
-        hintSolution = null;
-        hintIndex = 0;
-        hintStateKey = null;
-        hintComputing = false;
-        if (hintWorker) {
-          hintWorker.terminate();
-          hintWorker = null;
-        }
-        const btnHint = document.getElementById("btn-hint");
-        if (btnHint) {
-          btnHint.disabled = false;
-          btnHint.textContent = "提 示";
-        }
-        renderBoard();
-        // 重置电梯显示为1
-        updateElevatorFloor(1);
+        playResetSound();
+        // 直接根据当前电梯楼层重新加载
+        const currentFloor = parseInt(elevatorFloor.textContent, 10) || 1;
+        loadLevelByFloor(currentFloor);
       }
 
       // ============================================================
-      // 提示系统 (Web Worker BFS)
+      // 提示系统 (worker代码完全不变)
       // ============================================================
-
       const workerCode = `
         const COLS = 4, ROWS = 5;
         const TYPES = { '2x2': [2,2], '1x2': [1,2], '2x1': [2,1], '1x1': [1,1] };
-        // 类型编码: 0=空, 1=1x1, 2=1x2(占上半), 3=1x2(占下半), 4=2x1(占左半), 5=2x1(占右半),
-        //           6=michelle左上, 7=michelle右上, 8=michelle左下, 9=michelle右下
-
         function encodeState(bs) {
           const g = new Uint8Array(20);
           for (const b of bs) {
@@ -1082,7 +1103,6 @@
           }
           return String.fromCharCode.apply(null, g);
         }
-
         function buildGrid(bs) {
           const grid = [];
           for (let r = 0; r < ROWS; r++) grid[r] = new Array(COLS).fill(-1);
@@ -1095,7 +1115,6 @@
           }
           return grid;
         }
-
         function canMove(b, dx, dy, grid, idx) {
           const [w, h] = TYPES[b.type];
           const nx = b.x + dx, ny = b.y + dy;
@@ -1107,23 +1126,18 @@
             }
           return true;
         }
-
         self.onmessage = function(e) {
           const startBlocks = e.data;
           const visited = new Set();
           const startKey = encodeState(startBlocks);
           visited.add(startKey);
-
           const queue = [startBlocks.map(b => ({...b}))];
           const parent = [null];
           let head = 0;
-
           const dirs = [[0,-1],[0,1],[-1,0],[1,0]];
-
           while (head < queue.length) {
             const state = queue[head];
             const michIdx = state.findIndex(b => b.id === 'michelle');
-
             if (state[michIdx].x === 1 && state[michIdx].y === 3) {
               const path = [];
               let cur = head;
@@ -1135,9 +1149,7 @@
               self.postMessage({ success: true, moves: path });
               return;
             }
-
             const grid = buildGrid(state);
-
             for (let bi = 0; bi < state.length; bi++) {
               const b = state[bi];
               for (const [dx, dy] of dirs) {
@@ -1153,28 +1165,22 @@
             }
             head++;
           }
-
           self.postMessage({ success: false });
         };
       `;
 
       function getHint() {
         if (solving || hintComputing) return;
-
         const btnHint = document.getElementById("btn-hint");
 
         if (hintSolution && hintIndex < hintSolution.length) {
           const move = hintSolution[hintIndex];
           solving = true;
           moveBlock(move.id, move.dx, move.dy);
-          steps++;
-          stepDisplay.textContent = steps;
+          steps++; stepDisplay.textContent = steps;
           solving = false;
           hintIndex++;
-          if (hintIndex >= hintSolution.length) {
-            hintSolution = null;
-            hintStateKey = null;
-          }
+          if (hintIndex >= hintSolution.length) { hintSolution = null; hintStateKey = null; }
           return;
         }
 
@@ -1199,26 +1205,20 @@
             const move = hintSolution[hintIndex];
             solving = true;
             moveBlock(move.id, move.dx, move.dy);
-            steps++;
-            stepDisplay.textContent = steps;
+            steps++; stepDisplay.textContent = steps;
             solving = false;
             hintIndex++;
-            if (hintIndex >= hintSolution.length) {
-              hintSolution = null;
-              hintStateKey = null;
-            }
+            if (hintIndex >= hintSolution.length) { hintSolution = null; hintStateKey = null; }
           }
         };
-
         hintWorker.onerror = function () {
           URL.revokeObjectURL(url);
           hintWorker = null;
           hintComputing = false;
           btnHint.disabled = false;
           btnHint.textContent = "提 示";
-          alert("求解出错，请重试");
+          alert("求解出错");
         };
-
         hintWorker.postMessage(deepCloneLayout(blocks));
       }
 
@@ -1227,9 +1227,10 @@
       // ============================================================
       window.addEventListener("load", () => {
         preloadSounds();
-        resetGame();
-
-        // 显示更新日志弹窗（如果需要）
+        // 初始化楼层max
+        customFloorInput.max = getTotalLevels();
+        // 加载默认关卡 (楼层1)
+        loadLevelByFloor(1);
         if (shouldShowChangelog()) {
           showChangelog();
         }
