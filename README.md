@@ -1,3 +1,8 @@
+# 🎀 BanG Dream! 华容道小游戏 增强版关卡版
+增加：代码内自定义关卡，后续补充关卡信息
+
+forked from https://github.com/KasumiAmi/BanGKlotski_Enhanced:
+
 # 🎀 BanG Dream! 华容道小游戏 增强版
 
 本项目Fork了[fflow2023的原仓库项目](https://github.com/fflow2023/BanGKlotski)，并在基础上优化了游戏体验，同时添加了部分音效
