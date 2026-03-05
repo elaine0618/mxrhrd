@@ -1,6 +1,9 @@
 # 🎀 BanG Dream! 华容道小游戏 增强版关卡版
-增加：关卡信息目前18关，补充了缺少的图片，暂未补充音效
-调整后继续补充关卡
+增加：
+- 关卡信息目前18关
+- 补充缺少的图片
+- 点击/双击电梯上下楼，方便移动端操作
+暂未补充音效，调整后继续补充关卡
 
 forked from https://github.com/KasumiAmi/BanGKlotski_Enhanced:
 
