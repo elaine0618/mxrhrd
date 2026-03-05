@@ -654,51 +654,325 @@
         "1x1": [1, 1],
       };
 
-      // ★★★ 关卡参数列表 (可自由增删改) ★★★
+      // ★★★ 关卡参数列表 ★★★
       const LEVELS = [
-        { // 关卡1 (索引0): 经典布局
-          name: '经典·米歇尔',
+        { // 关卡1 (索引0): 横刀立马
+          name: '横刀立马',
           layout: [
             { id: "michelle", type: "2x2", x: 1, y: 0, img: "images/michelle.png" },
+			
             { id: "nyamu", type: "1x2", x: 0, y: 0, img: "images/nyamu.png" },
             { id: "moca", type: "1x2", x: 3, y: 0, img: "images/moca.png" },
             { id: "arisa", type: "1x2", x: 0, y: 2, img: "images/arisa.png" },
-            { id: "yukina", type: "2x1", x: 1, y: 2, img: "images/yukina.png" },
             { id: "eve", type: "1x2", x: 3, y: 2, img: "images/eve.png" },
+			
+            { id: "yukina", type: "2x1", x: 1, y: 2, img: "images/yukina.png" },
+			
             { id: "saya", type: "1x1", x: 1, y: 3, img: "images/saya.png" },
             { id: "box", type: "1x1", x: 2, y: 3, img: "images/box.png" },
             { id: "otae", type: "1x1", x: 0, y: 4, img: "images/otae.png" },
             { id: "tsukushi", type: "1x1", x: 3, y: 4, img: "images/tsukushi.png" },
           ]
         },
-        { // 关卡2 (索引1): 横刀立马风格
-          name: '横刀立马',
+        { // 关卡2 (索引1): 
+          name: '大路通天',
           layout: [
-            { id: "michelle", type: "2x2", x: 1, y: 2, img: "images/michelle.png" },
+            { id: "michelle", type: "2x2", x: 1, y: 0, img: "images/michelle.png" },
+			
             { id: "nyamu", type: "1x2", x: 0, y: 0, img: "images/nyamu.png" },
-            { id: "moca", type: "1x2", x: 3, y: 0, img: "images/moca.png" },
-            { id: "arisa", type: "1x2", x: 0, y: 2, img: "images/arisa.png" },
-            { id: "yukina", type: "1x2", x: 3, y: 2, img: "images/yukina.png" },
-            { id: "eve", type: "1x1", x: 1, y: 0, img: "images/eve.png" },
-            { id: "saya", type: "1x1", x: 2, y: 0, img: "images/saya.png" },
-            { id: "box", type: "1x1", x: 1, y: 4, img: "images/box.png" },
-            { id: "otae", type: "1x1", x: 2, y: 4, img: "images/otae.png" },
-            { id: "tsukushi", type: "1x1", x: 0, y: 4, img: "images/tsukushi.png" },
+            { id: "moca", type: "1x2", x: 0, y: 2, img: "images/moca.png" },
+            { id: "arisa", type: "1x2", x: 3, y: 0, img: "images/arisa.png" },
+            { id: "eve", type: "1x2", x: 3, y: 2, img: "images/eve.png" },
+			
+            { id: "saya", type: "1x1", x: 0, y: 4, img: "images/saya.png" },
+            { id: "otae", type: "1x1", x: 3, y: 4, img: "images/otae.png" },
           ]
         },
-        { // 关卡3 (索引2): 层层设防
-          name: '层层设防',
+        {
+          name: '一步之遥',
           layout: [
-            { id: "michelle", type: "2x2", x: 1, y: 3, img: "images/michelle.png" },
+            { id: "michelle", type: "2x2", x: 2, y: 3, img: "images/michelle.png" },
+			
             { id: "nyamu", type: "1x2", x: 0, y: 1, img: "images/nyamu.png" },
-            { id: "moca", type: "1x2", x: 3, y: 1, img: "images/moca.png" },
-            { id: "arisa", type: "1x1", x: 0, y: 0, img: "images/arisa.png" },
-            { id: "yukina", type: "1x1", x: 3, y: 0, img: "images/yukina.png" },
-            { id: "eve", type: "1x1", x: 1, y: 0, img: "images/eve.png" },
-            { id: "saya", type: "1x1", x: 2, y: 0, img: "images/saya.png" },
+            { id: "moca", type: "1x2", x: 1, y: 1, img: "images/moca.png" },
+            { id: "arisa", type: "1x2", x: 2, y: 0, img: "images/arisa.png" },
+            { id: "eve", type: "1x2", x: 3, y: 0, img: "images/eve.png" },
+			
+            { id: "yukina", type: "2x1", x: 0, y: 3, img: "images/yukina.png" },
+			
+            { id: "saya", type: "1x1", x: 0, y: 0, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 1, y: 0, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 0, y: 4, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 1, y: 4, img: "images/tsukushi.png" },
+          ]
+        },
+        {
+          name: '三军用命',
+          layout: [
+            { id: "michelle", type: "2x2", x: 1, y: 2, img: "images/michelle.png" },
+			
+            { id: "nyamu", type: "1x2", x: 0, y: 1, img: "images/nyamu.png" },
+            { id: "moca", type: "1x2", x: 0, y: 3, img: "images/moca.png" },
+            { id: "arisa", type: "1x2", x: 3, y: 1, img: "images/arisa.png" },
+            { id: "eve", type: "1x2", x: 3, y: 3, img: "images/eve.png" },
+			
+            { id: "yukina", type: "2x1", x: 1, y: 0, img: "images/yukina.png" },
+			
+            { id: "saya", type: "1x1", x: 0, y: 0, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 1, y: 4, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 2, y: 4, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 3, y: 0, img: "images/tsukushi.png" },
+          ]
+        },
+        { // zw
+          name: '通幽秘境',
+          layout: [
+            { id: "michelle", type: "2x2", x: 1, y: 2, img: "images/michelle.png" },
+			
+            { id: "nyamu", type: "1x2", x: 2, y: 0, img: "images/nyamu.png" },
+            { id: "moca", type: "1x2", x: 3, y: 0, img: "images/moca.png" },
+
+            { id: "yukina", type: "2x1", x: 0, y: 0, img: "images/yukina.png" },
+            { id: "yukina", type: "2x1", x: 0, y: 1, img: "images/zhanweih.png" },
+            { id: "yukina", type: "2x1", x: 0, y: 4, img: "images/zhanweih.png" },
+			
+            { id: "saya", type: "1x1", x: 0, y: 2, img: "images/saya.png" },
             { id: "box", type: "1x1", x: 0, y: 3, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 2, y: 4, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 3, y: 4, img: "images/tsukushi.png" },
+          ]
+        },
+        { // zw
+          name: '牛刀小试',
+          layout: [
+            { id: "michelle", type: "2x2", x: 0, y: 3, img: "images/michelle.png" },
+			
+            { id: "nyamu", type: "1x2", x: 0, y: 1, img: "images/nyamu.png" },
+            { id: "moca", type: "1x2", x: 1, y: 1, img: "images/moca.png" },
+
+            { id: "yukina", type: "2x1", x: 0, y: 0, img: "images/yukina.png" },
+            { id: "yukina", type: "2x1", x: 2, y: 0, img: "images/zhanweih.png" },
+            { id: "yukina", type: "2x1", x: 2, y: 2, img: "images/zhanweih.png" },
+			
+            { id: "saya", type: "1x1", x: 2, y: 3, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 2, y: 4, img: "images/box.png" },
             { id: "otae", type: "1x1", x: 3, y: 3, img: "images/otae.png" },
-            { id: "tsukushi", type: "1x1", x: 1, y: 2, img: "images/tsukushi.png" },
+            { id: "tsukushi", type: "1x1", x: 3, y: 4, img: "images/tsukushi.png" },
+          ]
+        },
+        { // zw
+          name: '横冲直撞',
+          layout: [
+            { id: "michelle", type: "2x2", x: 2, y: 2, img: "images/michelle.png" },
+			
+            { id: "nyamu", type: "1x2", x: 0, y: 0, img: "images/nyamu.png" },
+            { id: "moca", type: "1x2", x: 0, y: 2, img: "images/moca.png" },
+            { id: "arisa", type: "1x2", x: 1, y: 0, img: "images/arisa.png" },
+            { id: "eve", type: "1x2", x: 1, y: 2, img: "images/eve.png" },
+            { id: "yukina", type: "1x2", x: 3, y: 0, img: "images/zhanweis.png" },
+			
+            { id: "saya", type: "1x1", x: 0, y: 4, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 1, y: 4, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 2, y: 4, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 3, y: 4, img: "images/tsukushi.png" },
+          ]
+        },
+        {
+          name: '生机一线',
+          layout: [
+            { id: "michelle", type: "2x2", x: 1, y: 1, img: "images/michelle.png" },
+			
+            { id: "nyamu", type: "1x2", x: 0, y: 1, img: "images/nyamu.png" },
+            { id: "moca", type: "1x2", x: 0, y: 3, img: "images/moca.png" },
+            { id: "arisa", type: "1x2", x: 3, y: 1, img: "images/arisa.png" },
+            { id: "eve", type: "1x2", x: 3, y: 3, img: "images/eve.png" },
+			
+            { id: "yukina", type: "2x1", x: 1, y: 0, img: "images/yukina.png" },
+			
+            { id: "saya", type: "1x1", x: 0, y: 0, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 2, y: 3, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 2, y: 4, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 3, y: 0, img: "images/tsukushi.png" },
+          ]
+        },
+        { // zw
+          name: '一心一意',
+          layout: [
+            { id: "michelle", type: "2x2", x: 2, y: 1, img: "images/michelle.png" },
+			
+            { id: "nyamu", type: "1x2", x: 0, y: 1, img: "images/nyamu.png" },
+            { id: "moca", type: "1x2", x: 0, y: 3, img: "images/moca.png" },
+
+            { id: "yukina", type: "2x1", x: 0, y: 0, img: "images/yukina.png" },
+			{ id: "yukina", type: "2x1", x: 2, y: 0, img: "images/zhanweih.png" },
+			
+            { id: "saya", type: "1x1", x: 1, y: 1, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 1, y: 2, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 1, y: 3, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 2, y: 3, img: "images/tsukushi.png" },
+            { id: "tsukushi", type: "1x1", x: 3, y: 3, img: "images/zhanweif.png" },
+            { id: "tsukushi", type: "1x1", x: 3, y: 4, img: "images/zhanweif.png" },
+          ]
+        },
+        {
+          name: '海阔天空',
+          layout: [
+            { id: "michelle", type: "2x2", x: 1, y: 1, img: "images/michelle.png" },
+			
+            { id: "nyamu", type: "1x2", x: 0, y: 1, img: "images/nyamu.png" },
+            { id: "moca", type: "1x2", x: 0, y: 3, img: "images/moca.png" },
+            { id: "arisa", type: "1x2", x: 3, y: 1, img: "images/arisa.png" },
+            { id: "eve", type: "1x2", x: 3, y: 3, img: "images/eve.png" },
+			
+            { id: "yukina", type: "2x1", x: 1, y: 0, img: "images/yukina.png" },
+			
+            { id: "saya", type: "1x1", x: 0, y: 0, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 1, y: 3, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 2, y: 3, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 3, y: 0, img: "images/tsukushi.png" },
+          ]
+        },
+        { // zw
+          name: '似远似近',
+          layout: [
+            { id: "michelle", type: "2x2", x: 0, y: 0, img: "images/michelle.png" },
+			
+            { id: "nyamu", type: "1x2", x: 0, y: 3, img: "images/nyamu.png" },
+            { id: "moca", type: "1x2", x: 1, y: 3, img: "images/moca.png" },
+            { id: "arisa", type: "1x2", x: 3, y: 3, img: "images/arisa.png" },
+
+            { id: "yukina", type: "2x1", x: 2, y: 0, img: "images/yukina.png" },
+			{ id: "yukina", type: "2x1", x: 2, y: 1, img: "images/zhanweih.png" },
+			
+            { id: "saya", type: "1x1", x: 2, y: 2, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 2, y: 3, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 2, y: 4, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 3, y: 2, img: "images/tsukushi.png" },
+          ]
+        },
+        { // zw
+          name: '上下同心',
+          layout: [
+            { id: "michelle", type: "2x2", x: 1, y: 0, img: "images/michelle.png" },
+			
+            { id: "yukina", type: "2x1", x: 0, y: 2, img: "images/yukina.png" },
+			{ id: "yukina", type: "2x1", x: 0, y: 3, img: "images/zhanweih.png" },
+			{ id: "yukina", type: "2x1", x: 0, y: 4, img: "images/zhanweih.png" },
+			{ id: "yukina", type: "2x1", x: 2, y: 2, img: "images/zhanweih.png" },
+			{ id: "yukina", type: "2x1", x: 2, y: 3, img: "images/zhanweih.png" },
+			
+            { id: "saya", type: "1x1", x: 0, y: 0, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 0, y: 1, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 2, y: 4, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 3, y: 4, img: "images/tsukushi.png" },
+          ]
+        },
+        {
+          name: '神倒形颠',
+          layout: [
+            { id: "michelle", type: "2x2", x: 2, y: 0, img: "images/michelle.png" },
+			
+            { id: "nyamu", type: "1x2", x: 0, y: 3, img: "images/nyamu.png" },
+            { id: "moca", type: "1x2", x: 2, y: 3, img: "images/moca.png" },
+            { id: "arisa", type: "1x2", x: 1, y: 1, img: "images/arisa.png" },
+            { id: "eve", type: "1x2", x: 3, y: 2, img: "images/eve.png" },
+			
+            { id: "yukina", type: "2x1", x: 0, y: 0, img: "images/yukina.png" },
+			
+            { id: "saya", type: "1x1", x: 0, y: 2, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 1, y: 3, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 1, y: 4, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 2, y: 2, img: "images/tsukushi.png" },
+          ]
+        },
+        {
+          name: '首尾互换',
+          layout: [
+            { id: "michelle", type: "2x2", x: 1, y: 0, img: "images/michelle.png" },
+			
+            { id: "nyamu", type: "1x2", x: 0, y: 3, img: "images/nyamu.png" },
+            { id: "moca", type: "1x2", x: 1, y: 3, img: "images/moca.png" },
+            { id: "arisa", type: "1x2", x: 2, y: 3, img: "images/arisa.png" },
+            { id: "eve", type: "1x2", x: 3, y: 3, img: "images/eve.png" },
+			
+            { id: "yukina", type: "2x1", x: 0, y: 2, img: "images/yukina.png" },
+			
+            { id: "saya", type: "1x1", x: 0, y: 0, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 0, y: 1, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 2, y: 2, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 3, y: 2, img: "images/tsukushi.png" },
+          ]
+        },
+        { // zw
+          name: '神鬼难测',
+          layout: [
+            { id: "michelle", type: "2x2", x: 0, y: 0, img: "images/michelle.png" },
+			
+            { id: "nyamu", type: "1x2", x: 1, y: 3, img: "images/nyamu.png" },
+
+            { id: "yukina", type: "2x1", x: 0, y: 2, img: "images/yukina.png" },
+            { id: "yukina", type: "2x1", x: 2, y: 0, img: "images/zhanweih.png" },
+            { id: "yukina", type: "2x1", x: 2, y: 1, img: "images/zhanweih.png" },
+            { id: "yukina", type: "2x1", x: 2, y: 3, img: "images/zhanweih.png" },
+			
+            { id: "saya", type: "1x1", x: 2, y: 2, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 3, y: 2, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 2, y: 4, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 3, y: 4, img: "images/tsukushi.png" },
+          ]
+        },
+        {
+          name: '左右逢源',
+          layout: [
+            { id: "michelle", type: "2x2", x: 0, y: 0, img: "images/michelle.png" },
+			
+            { id: "nyamu", type: "1x2", x: 0, y: 3, img: "images/nyamu.png" },
+            { id: "moca", type: "1x2", x: 1, y: 3, img: "images/moca.png" },
+            { id: "arisa", type: "1x2", x: 2, y: 3, img: "images/arisa.png" },
+            { id: "eve", type: "1x2", x: 3, y: 3, img: "images/eve.png" },
+			
+            { id: "yukina", type: "2x1", x: 2, y: 0, img: "images/yukina.png" },
+			
+            { id: "saya", type: "1x1", x: 1, y: 2, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 2, y: 2, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 2, y: 1, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 3, y: 1, img: "images/tsukushi.png" },
+          ]
+        },
+        { // zw
+          name: '遁地无形',
+          layout: [
+            { id: "michelle", type: "2x2", x: 1, y: 2, img: "images/michelle.png" },
+			
+            { id: "nyamu", type: "1x2", x: 0, y: 1, img: "images/nyamu.png" },
+
+            { id: "yukina", type: "2x1", x: 0, y: 0, img: "images/yukina.png" },
+            { id: "yukina", type: "2x1", x: 2, y: 0, img: "images/zhanweih.png" },
+            { id: "yukina", type: "2x1", x: 0, y: 4, img: "images/zhanweih.png" },
+            { id: "yukina", type: "2x1", x: 2, y: 4, img: "images/zhanweih.png" },
+			
+            { id: "saya", type: "1x1", x: 0, y: 3, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 3, y: 1, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 3, y: 2, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 3, y: 3, img: "images/tsukushi.png" },
+          ]
+        },
+        {
+          name: '孔明羽扇',
+          layout: [
+            { id: "michelle", type: "2x2", x: 0, y: 3, img: "images/michelle.png" },
+			
+            { id: "nyamu", type: "1x2", x: 1, y: 0, img: "images/nyamu.png" },
+            { id: "moca", type: "1x2", x: 2, y: 1, img: "images/moca.png" },
+            { id: "arisa", type: "1x2", x: 3, y: 0, img: "images/arisa.png" },
+            { id: "eve", type: "1x2", x: 3, y: 2, img: "images/eve.png" },
+			
+            { id: "yukina", type: "2x1", x: 2, y: 4, img: "images/yukina.png" },
+			
+            { id: "saya", type: "1x1", x: 0, y: 1, img: "images/saya.png" },
+            { id: "box", type: "1x1", x: 0, y: 2, img: "images/box.png" },
+            { id: "otae", type: "1x1", x: 1, y: 2, img: "images/otae.png" },
+            { id: "tsukushi", type: "1x1", x: 2, y: 3, img: "images/tsukushi.png" },
           ]
         }
       ];
