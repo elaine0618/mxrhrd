@@ -278,7 +278,9 @@
       { id: 'otae',     type: '1x1', img: 'images/otae.png'},
       { id: 'tsukushi', type: '1x1', img: 'images/tsukushi.png'},
       { id: 'raycell', type: '1x1', img: 'images/raycell.png'},
-      { id: 'aya',      type: '1x1', img: 'images/aya.png'}
+      { id: 'aya',      type: '1x1', img: 'images/aya.png'},
+      { id: 'chuchu',      type: '1x1', img: 'images/chuchu.png'},
+      { id: 'pareo',      type: '1x1', img: 'images/pareo.png'}
     ];
 
     // 状态
@@ -418,38 +420,57 @@
       el.style.transition = 'none';
     }
 
-    function endDrag() {
-      if (!dragState) return;
-      const { blockId, el, w, h } = dragState;
-      el.classList.remove('dragging');
-      el.style.transition = '';
+	function endDrag() {
+	  if (!dragState) return;
+	  const { blockId, el, w, h } = dragState;
+	  el.classList.remove('dragging');
+	  el.style.transition = '';
 
-      const layerRect = layer.getBoundingClientRect();
-      const { cellW, cellH } = getCellSize();
+	  const layerRect = layer.getBoundingClientRect();
+	  const { cellW, cellH } = getCellSize();
 
-      let left = parseFloat(el.style.left) || 0;
-      let top = parseFloat(el.style.top) || 0;
+	  let left = parseFloat(el.style.left) || 0;
+	  let top = parseFloat(el.style.top) || 0;
 
-      let gridX = Math.round(left / cellW);
-      let gridY = Math.round(top / cellH);
+	  // 判断是否拖拽到棋盘外
+	  const deleteZoneThreshold = 50;
+	  if (left < -deleteZoneThreshold || 
+		  left > layerRect.width + deleteZoneThreshold - (w * cellW) ||
+		  top < -deleteZoneThreshold || 
+		  top > layerRect.height + deleteZoneThreshold - (h * cellH)) {
+		
+		const index = blocks.findIndex(b => b.id === blockId);
+		if (index !== -1) {
+		  blocks.splice(index, 1);
+		  showToast(`🗑️ 已移除`, 1000);
+		}
+		
+		renderBlocks();
+		updatePreviewText();
+		dragState = null;
+		return;
+	  }
 
-      gridX = Math.max(0, Math.min(COLS - w, gridX));
-      gridY = Math.max(0, Math.min(ROWS - h, gridY));
+	  let gridX = Math.round(left / cellW);
+	  let gridY = Math.round(top / cellH);
 
-      const block = blocks.find(b => b.id === blockId);
-      if (!block) { dragState = null; return; }
+	  gridX = Math.max(0, Math.min(COLS - w, gridX));
+	  gridY = Math.max(0, Math.min(ROWS - h, gridY));
 
-      if (canPlaceAt(block, gridX, gridY, blockId)) {
-        block.x = gridX;
-        block.y = gridY;
-      } else {
-        showToast(`⛔ 此处满员`, 1200);
-      }
+	  const block = blocks.find(b => b.id === blockId);
+	  if (!block) { dragState = null; return; }
 
-      renderBlocks();  // 重绘所有角色，保证位置正确
-      updatePreviewText();
-      dragState = null;
-    }
+	  if (canPlaceAt(block, gridX, gridY, blockId)) {
+		block.x = gridX;
+		block.y = gridY;
+	  } else {
+		showToast(`⛔ 此处满员`, 1200);
+	  }
+
+	  renderBlocks();  // 重绘所有角色，保证位置正确
+	  updatePreviewText();
+	  dragState = null;
+	}
 
     // ---------- 全量渲染角色 ----------
     function renderBlocks() {
